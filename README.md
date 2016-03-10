@@ -1,11 +1,9 @@
 # Data-Science-Project
 
 ## Group Member
-104971003 蔡詠捷
-
-104971012 陳映孜
-
-104971018 王登文
+104971003 蔡詠捷 
+104971012 陳映孜 
+104971018 王登文 
 
 ## Data Set
 Data set: https://www.kaggle.com/census/2013-american-community-survey
