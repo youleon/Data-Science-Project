@@ -1,0 +1,19 @@
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+.env
+logs
+project/project
+project/target
+target
+tmp
+.history
+dist
+.idea
+
+*.class
