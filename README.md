@@ -13,3 +13,7 @@ The American Community Survey is an ongoing survey from the US Census Bureau. In
 
 https://www.kaggle.com/snap/amazon-fine-food-reviews 
 
+## Intellij Run Setting
+### Important
+
+`Run` > `Edit` > Add `-Dspark.master=local[2]` on `VM options`
