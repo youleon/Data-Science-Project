@@ -39,8 +39,28 @@ object Csv {
       }
     }
 
+    queryCSV(sc)
+
     val end = java.lang.System.currentTimeMillis()
     println("end : " + end)
   }
 
+  def queryCSV(sc: SparkContext): Unit = {
+    var sqlContext = new org.apache.spark.sql.SQLContext(sc)
+    val csvAll = sqlContext.read
+      .format("com.databricks.spark.csv")
+      .option("header", "true") // Use first line of all files as header
+      //.option("inferSchema", "true") // Automatically infer data types
+      .load("Scorecard_small.csv")
+    //sqlContext.load("com.databricks.spark.csv", Map("path" -> "Scorecard_small.csv", "header" -> "true"))
+    //csvAll.registerTempTable("AllData")
+    /*val result = sqlContext.sql("select Id, UNITID, OPEID, opeid6, INSTNM, CITY, STABBR, ZIP, AccredAgency from AllData").rdd.map(row => row.toString.substring(1, row.length - 2))
+
+    result.foreach {
+      println
+    }*/
+    csvAll.select("Id", "UNITID", "OPEID", "opeid6", "INSTNM", "CITY", "STABBR", "ZIP", "AccredAgency").foreach(
+      println
+    )
+  }
 }
