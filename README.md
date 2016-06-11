@@ -18,5 +18,6 @@ dataSet 約570MB
 根據Score Card 及學費學貸 以及畢業後的income 來推薦哪個學校值得念 或預測哪個學校未來的ranking會提高
 
 ## Intellij Run Setting
-### Important  
+### Important
+
 `Run` > `Edit` > Add `-Dspark.master=local[2]` on `VM options`
