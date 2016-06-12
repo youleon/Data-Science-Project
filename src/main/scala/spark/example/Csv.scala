@@ -64,7 +64,6 @@ object Csv {
         }
       }
     }
-    println(columnSet.size)
   }
 
   def showCSVHeader(csv: RDD[String]) : Map[String, String] = {
@@ -78,6 +77,7 @@ object Csv {
       val key : String = columnCount + ""
       columnMap += (key -> column)
     })
+
     columnMap
   }
 
@@ -88,7 +88,7 @@ object Csv {
       .format("com.databricks.spark.csv")
       .option("header", "true") // Use first line of all files as header
       .option("inferScheme", "true")
-      .load("Scorecard_small.csv")
+      .load("Scorecard.csv")
 
     csvAll.registerTempTable("records")
 
@@ -103,12 +103,12 @@ object Csv {
       }
       count += 1
     })
+    str = "s11.INSTNM, s11.CONTROL, s11.md_earn_wne_p10, s11.pct10_earn_wne_p10, s11.pct25_earn_wne_p10, s11.pct75_earn_wne_p10, s11.pct90_earn_wne_p10, s11.PREDDEG"
 
     // put column in the select
-    val records = sqlContext.sql("SELECT "+str+" FROM records ")
-    records.foreach(
-      println
-    )
+    val records = sqlContext.sql("SELECT "+str+" FROM records s11 inner join  records s13 ON s11.UNITID=s13.UNITID  WHERE s11.Year=2011 AND s13.Year=2013   AND s11.pct75_earn_wne_p10 IS NOT NULL  AND s11.pct75_earn_wne_p10 != 'PrivacySuppressed'  and s11.PREDDEG like 'Predominantly bachelor%s-degree granting'  AND s13.CCBASIC NOT LIKE '%Special%'   and s11.md_earn_wne_p10 > 0 ORDER BY s11.pct75_earn_wne_p10 DESC ")
+    println(records.count())
+    records.foreach(println)
 
 
   }
