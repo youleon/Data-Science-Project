@@ -26,11 +26,11 @@ object RandomForestClassification {
     // Empty categoricalFeaturesInfo indicates all features are continuous.
     val numClasses = 10
     val categoricalFeaturesInfo = Map[Int, Int]()
-    val numTrees = 50 // Use more in practice.
+    val numTrees = 100 // Use more in practice.
     val featureSubsetStrategy = "sqrt" // Number of features to consider for splits at each node. Supported: "auto", "all", "sqrt", "log2", "onethird". If "auto" is set, this parameter is set based on numTrees: if numTrees == 1, set to "all"; if numTrees > 1 (forest) set to "sqrt".
     val impurity = "gini"
     val maxDepth = 4
-    val maxBins = 100
+    val maxBins = 1000
 
 
     /*val model = RandomForest.trainClassifier(trainingData,
