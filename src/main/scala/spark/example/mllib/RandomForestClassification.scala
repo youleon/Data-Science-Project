@@ -19,18 +19,18 @@ object RandomForestClassification {
     // Load and parse the data file.
     val data = MLUtils.loadLibSVMFile(sc, "YearPredictionMSDTesting.t")
     // Split the data into training and test sets (30% held out for testing)
-    val splits = data.randomSplit(Array(0.8, 0.2))
+    val splits = data.randomSplit(Array(0.9, 0.1))
     val (trainingData, testData) = (splits(0), splits(1))
 
     // Train a RandomForest model.
     // Empty categoricalFeaturesInfo indicates all features are continuous.
-    val numClasses = 89
+    val numClasses = 10
     val categoricalFeaturesInfo = Map[Int, Int]()
-    val numTrees = 3 // Use more in practice.
-    val featureSubsetStrategy = "auto" // Let the algorithm choose.
-    val impurity = "gini"
-    val maxDepth = 4
-    val maxBins = 32
+    val numTrees = 10 // Use more in practice.
+    val featureSubsetStrategy = "all" // Number of features to consider for splits at each node. Supported: "auto", "all", "sqrt", "log2", "onethird". If "auto" is set, this parameter is set based on numTrees: if numTrees == 1, set to "all"; if numTrees > 1 (forest) set to "sqrt".
+    val impurity = "entropy"
+    val maxDepth = 5
+    val maxBins = 100
 
 
     /*val model = RandomForest.trainClassifier(trainingData,
