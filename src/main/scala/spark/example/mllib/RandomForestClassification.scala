@@ -17,20 +17,45 @@ object RandomForestClassification {
     val sc = new SparkContext(conf)
     // $example on$
     // Load and parse the data file.
-    val data = MLUtils.loadLibSVMFile(sc, "train_2.txt")
-    // Split the data into training and test sets (30% held out for testing)
-    val splits = data.randomSplit(Array(0.8, 0.2))
+    val data = MLUtils.loadLibSVMFile(sc, "train_3.txt")
+    // Split the data into training and test sets (20% held out for testing)
+    val splits = data.randomSplit(Array(0.9, 0.1))
     val (trainingData, testData) = (splits(0), splits(1))
 
     // Train a RandomForest model.
     // Empty categoricalFeaturesInfo indicates all features are continuous.
-    val numClasses = 9
-    val categoricalFeaturesInfo = Map[Int, Int](/*0 -> 0, 1 -> 1, 2 -> 2, 5 -> 5, 8 -> 8, 13 -> 13, 15 -> 15, 19 -> 19, 30 -> 30, 37 -> 37, 58 -> 58, 59 -> 59*/) // Map storing arity of categorical features. E.g., an entry (n -> k) indicates that feature n is categorical with k categories indexed from 0: {0, 1, ..., k-1}.
+    val numClasses = 2
+    val categoricalFeaturesInfo = Map[Int, Int](
+      19->0,2->0,40->0,4->0,15->0,22->0,87->0
+      /*
+            69->0,
+            62->0,
+            40->0,
+            5->0,
+            32->0,
+            56->0,
+            52->0,
+            45->0,
+            66->0,
+            6->0,
+            81->0,
+            24->0,
+            76->0,
+            87->0,
+            39->0,
+            37->0,
+            74->0,
+            54->0,
+            42->0,
+            17->0,
+            19->0,
+            84->0*/
+      /*0 -> 0, 1 -> 0, 2 -> 0, 5 -> 5, 8 -> 8, 13 -> 13, 15 -> 15, 19 -> 19, 30 -> 30, 37 -> 37, 58 -> 58, 59 -> 59*/) // Map storing arity of categorical features. E.g., an entry (n -> k) indicates that feature n is categorical with k categories indexed from 0: {0, 1, ..., k-1}.
     val numTrees = 100 // Use more in practice.
-    val featureSubsetStrategy = "sqrt" // Number of features to consider for splits at each node. Supported: "auto", "all", "sqrt", "log2", "onethird". If "auto" is set, this parameter is set based on numTrees: if numTrees == 1, set to "all"; if numTrees > 1 (forest) set to "sqrt".
+    val featureSubsetStrategy = "all" // Number of features to consider for splits at each node. Supported: "auto", "all", "sqrt", "log2", "onethird". If "auto" is set, this parameter is set based on numTrees: if numTrees == 1, set to "all"; if numTrees > 1 (forest) set to "sqrt".
     val impurity = "entropy" // Criterion used for information gain calculation. Supported values: "gini" (recommended) or "entropy".
     val maxDepth = 4 // Maximum depth of the tree. E.g., depth 0 means 1 leaf node; depth 1 means 1 internal node + 2 leaf nodes. (suggested value: 4)
-    val maxBins = 10 // maximum number of bins used for splitting features (suggested value: 100)
+    val maxBins = 16 // maximum number of bins used for splitting features (suggested value: 100)
 
 
     /*val model = RandomForest.trainClassifier(trainingData,
