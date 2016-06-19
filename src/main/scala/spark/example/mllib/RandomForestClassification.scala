@@ -24,10 +24,11 @@ object RandomForestClassification {
 
     // Train a RandomForest model.
     // Empty categoricalFeaturesInfo indicates all features are continuous.
-    val numClasses = 2
+    val numClasses = 10
     val categoricalFeaturesInfo = Map[Int, Int](
       /*19->0,2->0,40->0,4->0,15->0,22->0,87->0*/
       ) // Map storing arity of categorical features. E.g., an entry (n -> k) indicates that feature n is categorical with k categories indexed from 0: {0, 1, ..., k-1}.
+
     val numTrees = 50 // Use more in practice.
     val featureSubsetStrategy = "sqrt" // Number of features to consider for splits at each node. Supported: "auto", "all", "sqrt", "log2", "onethird". If "auto" is set, this parameter is set based on numTrees: if numTrees == 1, set to "all"; if numTrees > 1 (forest) set to "sqrt".
     val impurity = "gini" // Criterion used for information gain calculation. Supported values: "gini" (recommended) or "entropy".

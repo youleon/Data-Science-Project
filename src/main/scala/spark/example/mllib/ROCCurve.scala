@@ -15,10 +15,10 @@ object ROCCurve {
     val sc = new SparkContext(conf)
     // $example on$
     // Load training data in LIBSVM format
-    val data = MLUtils.loadLibSVMFile(sc, "sample_binary_classification_data.txt")
+    val data = MLUtils.loadLibSVMFile(sc, "train_3.txt")
 
     // Split data into training (60%) and test (40%)
-    val Array(training, test) = data.randomSplit(Array(0.6, 0.4), seed = 11L)
+    val Array(training, test) = data.randomSplit(Array(0.9, 0.1), seed = 11L)
     training.cache()
 
     // Run training algorithm to build the model
