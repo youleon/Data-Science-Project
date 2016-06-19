@@ -15,15 +15,15 @@ object LogisticRegressionWithLBFGSExample {
     val conf = new SparkConf().setAppName("RandomForestClassificatione").setMaster("local")
     val sc = new SparkContext(conf)
     // Load training data in LIBSVM format
-    val data = MLUtils.loadLibSVMFile(sc, "YearPredictionMSD.t")
+    val data = MLUtils.loadLibSVMFile(sc, "train_3.LINE.txt")
 
     // Split data into training (60%) and test (40%)
-    val Array(training, test) = data.randomSplit(Array(0.6, 0.4), seed = 11L)
+    val Array(training, test) = data.randomSplit(Array(0.9, 0.1), seed = 11L)
     training.cache()
 
     // Run training algorithm to build the model
     val model = new LogisticRegressionWithLBFGS()
-      .setNumClasses(9)
+      .setNumClasses(3)
       .run(training)
 
     // Compute raw scores on the test set
@@ -40,15 +40,16 @@ object LogisticRegressionWithLBFGSExample {
     println(metrics.confusionMatrix)
 
     // Overall Statistics
-    val precision = metrics.precision
-    val recall = metrics.recall // same as true positive rate
-    val f1Score = metrics.fMeasure
+    //val precision = metrics.precision
+    //val recall = metrics.recall // same as true positive rate
+    //val f1Score = metrics.fMeasure
     val accurancy = metrics.accuracy
     println("Summary Statistics")
-    println(s"Precision = $precision")
-    println(s"Recall = $recall")
-    println(s"F1 Score = $f1Score")
+    //println(s"Precision = $precision")
+    //println(s"Recall = $recall")
+    //println(s"F1 Score = $f1Score")
     println(s"acccurancy = $accurancy ")
+
 
     // Precision by label
     val labels = metrics.labels
@@ -76,6 +77,7 @@ object LogisticRegressionWithLBFGSExample {
     println(s"Weighted recall: ${metrics.weightedRecall}")
     println(s"Weighted F1 score: ${metrics.weightedFMeasure}")
     println(s"Weighted false positive rate: ${metrics.weightedFalsePositiveRate}")
+    println(s"Weighted true positive rate: ${metrics.weightedTruePositiveRate}")
   }
 }
 // scalastyle:on println
